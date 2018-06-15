@@ -46,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    @available(iOS 9.0, *)
     func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
             return GIDSignIn.sharedInstance().handle(url,
                 sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: [:])
@@ -62,26 +61,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             return
         }
         
-        print("Successfully logged into Google", user)
-        guard let idToken = user.authentication.idToken else { return }
-        guard let accessToken = user.authentication.accessToken else { return }
-        let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+        guard let authentication = user.authentication else {return}
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
         
-        Auth.auth().signIn(with: credentials, completion: { (user, error) in
-            if let err = error {
-                print("Failed to create a Firebase User with Google account: ", err)
+        Auth.auth().signIn(with: credential) { (user, error) in
+            if let error = error {
+                print (error)
                 return
+            } else if error == nil {
+                print ("User successfully signed in through GOOGLE! uid:\(Auth.auth().currentUser!.uid)")
+                print ("signed in")
+                self.window?.rootViewController?.performSegue(withIdentifier: "AccessToMyPets", sender: nil)
+                
+//                self.window?.rootViewController?.performSegue(withIdentifier: "testIdentifier", sender: nil)
+
+                
             }
-            
-            guard let uid = user?.uid else { return }
-            print("Successfully logged into Firebase with Google", uid)
-            // segue here
-            DispatchQueue.main.async {
-                self.window?.rootViewController?.performSegue(withIdentifier: "AccessToMyPets", sender: self)
-            }
-        })
+        }
     }
     
-
+    func sign (_signIn: GIDSignIn!, disdDisconnectWith user: GIDGoogleUser!, withError error: Error!){
+        
+    }
 }
 

@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Map-->
+        <!--Map View Controller-->
         <scene sceneID="88l-Mm-eYE">
             <objects>
-                <viewController id="JDz-9l-HfM" sceneMemberID="viewController">
+                <viewController id="JDz-9l-HfM" customClass="MapViewController" customModule="MyPets" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i6E-31-BAo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,11 +32,89 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oCU-sn-TNN"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" id="b7k-Ih-vI5"/>
+                    <navigationItem key="navigationItem" id="4r4-Sg-R5t"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="erX-Tq-yW4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="28" y="-103.89805097451276"/>
+            <point key="canvasLocation" x="822" y="-19"/>
+        </scene>
+        <!--My Pets View Controller-->
+        <scene sceneID="VrG-WQ-Nsl">
+            <objects>
+                <viewController id="iLt-iu-AMs" customClass="MyPetsViewController" customModule="MyPets" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Qo0-ms-R1c">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFd-1s-szE">
+                                <rect key="frame" x="62" y="528" width="250" height="50"/>
+                                <color key="backgroundColor" red="0.99607843139999996" green="0.28869963119999997" blue="0.60392853909999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Zy8-ig-f9U"/>
+                                    <constraint firstAttribute="width" constant="250" id="oug-D7-DxD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
+                                <state key="normal" title="Add Pet">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="TuY-We-Mzj" kind="push" id="TC1-Tr-dY4"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CcG-ns-9GO">
+                                <rect key="frame" x="0.0" y="64" width="375" height="394"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="petCell" rowHeight="73" id="nyS-fv-UUX" customClass="PetTableViewCell" customModule="MyPets" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="73"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nyS-fv-UUX" id="Qtq-R5-q6C">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KG-1u-Aev">
+                                                    <rect key="frame" x="15" y="12" width="80" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dog" translatesAutoresizingMaskIntoConstraints="NO" id="Fgt-rM-woC">
+                                                    <rect key="frame" x="292" y="12" width="68" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="petName" destination="7KG-1u-Aev" id="gMi-lz-hPj"/>
+                                            <outlet property="petPicture" destination="Fgt-rM-woC" id="dYz-DF-8gz"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="RFd-1s-szE" firstAttribute="top" secondItem="CcG-ns-9GO" secondAttribute="bottom" constant="70" id="1fA-hw-DgM"/>
+                            <constraint firstItem="CcG-ns-9GO" firstAttribute="top" secondItem="004-kO-nvb" secondAttribute="top" id="1nP-WN-wHS"/>
+                            <constraint firstItem="CcG-ns-9GO" firstAttribute="trailing" secondItem="004-kO-nvb" secondAttribute="trailing" id="7OC-mP-Inf"/>
+                            <constraint firstItem="004-kO-nvb" firstAttribute="bottom" secondItem="RFd-1s-szE" secondAttribute="bottom" constant="40" id="KeN-ck-9TP"/>
+                            <constraint firstItem="CcG-ns-9GO" firstAttribute="leading" secondItem="004-kO-nvb" secondAttribute="leading" id="guI-u4-ol2"/>
+                            <constraint firstItem="CcG-ns-9GO" firstAttribute="top" secondItem="004-kO-nvb" secondAttribute="top" id="kFR-YN-qEi"/>
+                            <constraint firstItem="RFd-1s-szE" firstAttribute="centerX" secondItem="004-kO-nvb" secondAttribute="centerX" id="qco-ek-B5F"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="004-kO-nvb"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="MCH-z8-ceE"/>
+                    <connections>
+                        <outlet property="addPetsButton" destination="RFd-1s-szE" id="UOq-7F-0hq"/>
+                        <outlet property="petsTable" destination="CcG-ns-9GO" id="k4Y-rO-hMJ"/>
+                        <segue destination="LOF-WC-C4j" kind="show" id="WWN-vA-rZ1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OzM-dM-jGC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="821.60000000000002" y="-1496.4017991004498"/>
         </scene>
         <!--Pets View Controller-->
         <scene sceneID="sXb-ls-hWd">
@@ -47,7 +125,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DlJ-F5-ZKO">
-                                <rect key="frame" x="0.0" y="64" width="375" height="404"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="497"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="petCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Hjc-Ag-Cwv" customClass="PetTableViewCell" customModule="MyPets" customModuleProvider="target">
@@ -70,15 +148,11 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="petName" destination="JkF-Z0-uYI" id="aAZ-6t-B3h"/>
-                                            <outlet property="petPicture" destination="4zd-FR-Rhf" id="Dae-tU-KUP"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dT8-nb-W0I">
-                                <rect key="frame" x="62.5" y="513" width="250" height="50"/>
+                                <rect key="frame" x="62.5" y="562" width="250" height="50"/>
                                 <color key="backgroundColor" red="0.99607843137254903" green="0.2886996312436545" blue="0.60392853909906619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="KFc-ch-O5a"/>
@@ -103,14 +177,28 @@
                     </view>
                     <navigationItem key="navigationItem" id="Fs6-Dq-KPw"/>
                     <connections>
-                        <outlet property="addPet" destination="dT8-nb-W0I" id="VZE-FH-gn9"/>
-                        <outlet property="petsTable" destination="DlJ-F5-ZKO" id="xIU-Dx-bfN"/>
-                        <segue destination="LOF-WC-C4j" kind="show" id="agr-wP-vgg"/>
+                        <outlet property="addPetButton" destination="dT8-nb-W0I" id="P50-Hf-VQp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O5z-DC-veM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="823" y="-770"/>
+            <point key="canvasLocation" x="916" y="-770.46476761619192"/>
+        </scene>
+        <!--Add Pet View Controller-->
+        <scene sceneID="sKM-eD-GH5">
+            <objects>
+                <viewController id="TuY-We-Mzj" customClass="AddPetViewController" customModule="MyPets" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6GW-dK-O24">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="bt6-zo-kiV"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="SMW-hV-8RQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qyI-yN-XGL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1786" y="-719"/>
         </scene>
         <!--Pet View Controller-->
         <scene sceneID="1I2-wY-yEc">
@@ -120,7 +208,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BZd-fb-K52">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dog" translatesAutoresizingMaskIntoConstraints="NO" id="BZd-fb-K52">
                                 <rect key="frame" x="87" y="64" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="bOp-cX-AV7"/>
@@ -197,7 +285,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dBz-nK-E8l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1717.5999999999999" y="-770.46476761619192"/>
+            <point key="canvasLocation" x="1764" y="-1496"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="d4R-Kt-fXn">
@@ -210,7 +298,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="ha4-gA-TJR" kind="relationship" relationship="viewControllers" id="Aql-pP-Fby"/>
-                        <segue destination="JDz-9l-HfM" kind="relationship" relationship="viewControllers" id="T9r-fK-Vrw"/>
+                        <segue destination="wYd-nf-vTz" kind="relationship" relationship="viewControllers" id="kvE-AY-BSG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfm-fN-DYp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -277,15 +365,35 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="ubu-0e-8Kz" kind="relationship" relationship="rootViewController" id="y69-1f-Dv7"/>
+                        <segue destination="iLt-iu-AMs" kind="relationship" relationship="rootViewController" id="oh9-Xd-Jj9"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JE8-Ne-chO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="27.199999999999999" y="-767.31634182908556"/>
         </scene>
+        <!--Map-->
+        <scene sceneID="kcA-TM-fyF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wYd-nf-vTz" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" id="2Gz-Gs-fWr"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GBB-Pq-6tH">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JDz-9l-HfM" kind="relationship" relationship="rootViewController" id="ndf-k4-2WS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9sl-N4-GWg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="25.600000000000001" y="-18.890554722638683"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="dog" width="296" height="196"/>
         <image name="rabbit" width="516" height="314"/>
     </resources>
 </document>

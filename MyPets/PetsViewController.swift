@@ -8,21 +8,21 @@
 
 import UIKit
 
-class PetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PetsViewController: UIViewController/*,UITableViewDelegate, UITableViewDataSource*/ {
     
-    @IBOutlet weak var addPet: UIButton!
-    @IBOutlet weak var petsTable: UITableView!
+    //@IBOutlet weak var petsTable: UITableView!
+    //@IBOutlet weak var addPetButton: UIButton!
     
-    var pets:[Pet] = []
+    //var pets:[Pet] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        petsTable.delegate = self
-        petsTable.dataSource = self
-        petsTable.reloadData()
+      //  petsTable.delegate = self
+       // petsTable.dataSource = self
+        //petsTable.reloadData()
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+   /* func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = petsTable.dequeueReusableCell(withIdentifier: "petCell", for:indexPath) as? PetTableViewCell
         
@@ -57,7 +57,7 @@ class PetsViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.petsTable.deselectRow(at: index, animated: true)
         }
     }
-    
+    */
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
