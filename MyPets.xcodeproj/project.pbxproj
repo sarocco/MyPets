@@ -20,7 +20,6 @@
 		417A087F20CA071C008D53EA /* PetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A087E20CA071C008D53EA /* PetViewController.swift */; };
 		417A088120D1F13B008D53EA /* InfoPetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A088020D1F13B008D53EA /* InfoPetTableViewCell.swift */; };
 		41CD55FC20C9F06800434775 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41CD55FB20C9F06800434775 /* GoogleService-Info.plist */; };
-		41CD55FF20C9FC8800434775 /* PetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CD55FD20C9FB1200434775 /* PetsViewController.swift */; };
 		41CD560120C9FE8D00434775 /* PetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CD560020C9FE8D00434775 /* PetTableViewCell.swift */; };
 		41DA190F20D335870000A25E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41DA190E20D335870000A25E /* MapViewController.swift */; };
 		41DA191120D347820000A25E /* MyPetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41DA191020D347820000A25E /* MyPetsViewController.swift */; };
@@ -67,7 +66,6 @@
 		417A087E20CA071C008D53EA /* PetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewController.swift; sourceTree = "<group>"; };
 		417A088020D1F13B008D53EA /* InfoPetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPetTableViewCell.swift; sourceTree = "<group>"; };
 		41CD55FB20C9F06800434775 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		41CD55FD20C9FB1200434775 /* PetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewController.swift; sourceTree = "<group>"; };
 		41CD560020C9FE8D00434775 /* PetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTableViewCell.swift; sourceTree = "<group>"; };
 		41DA190E20D335870000A25E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		41DA191020D347820000A25E /* MyPetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetsViewController.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 				4165EB1720C32A2100841D57 /* Assets.xcassets */,
 				4165EB1920C32A2100841D57 /* LaunchScreen.storyboard */,
 				4165EB1C20C32A2100841D57 /* Info.plist */,
-				41CD55FD20C9FB1200434775 /* PetsViewController.swift */,
 				41CD560020C9FE8D00434775 /* PetTableViewCell.swift */,
 				417A087E20CA071C008D53EA /* PetViewController.swift */,
 				417A088020D1F13B008D53EA /* InfoPetTableViewCell.swift */,
@@ -506,7 +503,6 @@
 				41CD560120C9FE8D00434775 /* PetTableViewCell.swift in Sources */,
 				417A087D20CA0353008D53EA /* Vaccine.swift in Sources */,
 				41DA190F20D335870000A25E /* MapViewController.swift in Sources */,
-				41CD55FF20C9FC8800434775 /* PetsViewController.swift in Sources */,
 				41DA191120D347820000A25E /* MyPetsViewController.swift in Sources */,
 				417A088120D1F13B008D53EA /* InfoPetTableViewCell.swift in Sources */,
 				4165EB1120C32A2100841D57 /* AppDelegate.swift in Sources */,

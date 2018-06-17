@@ -114,75 +114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OzM-dM-jGC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="821.60000000000002" y="-1496.4017991004498"/>
-        </scene>
-        <!--Pets View Controller-->
-        <scene sceneID="sXb-ls-hWd">
-            <objects>
-                <viewController id="ubu-0e-8Kz" customClass="PetsViewController" customModule="MyPetsTests" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="lJe-RX-5Sr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DlJ-F5-ZKO">
-                                <rect key="frame" x="0.0" y="20" width="375" height="497"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="petCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Hjc-Ag-Cwv" customClass="PetTableViewCell" customModule="MyPets" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hjc-Ag-Cwv" id="9eO-Jh-PbS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4zd-FR-Rhf">
-                                                    <rect key="frame" x="297" y="0.0" width="45" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pet's Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JkF-Z0-uYI">
-                                                    <rect key="frame" x="15" y="11" width="145" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dT8-nb-W0I">
-                                <rect key="frame" x="62.5" y="562" width="250" height="50"/>
-                                <color key="backgroundColor" red="0.99607843137254903" green="0.2886996312436545" blue="0.60392853909906619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="KFc-ch-O5a"/>
-                                    <constraint firstAttribute="width" constant="250" id="vkv-fm-267"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
-                                <state key="normal" title="Add Pet">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="dT8-nb-W0I" firstAttribute="top" secondItem="DlJ-F5-ZKO" secondAttribute="bottom" constant="45" id="2TH-K7-xzZ"/>
-                            <constraint firstItem="gxF-sn-VSl" firstAttribute="bottom" secondItem="DlJ-F5-ZKO" secondAttribute="bottom" constant="150" id="LAP-bX-x8s"/>
-                            <constraint firstItem="DlJ-F5-ZKO" firstAttribute="top" secondItem="gxF-sn-VSl" secondAttribute="top" id="Pcy-aO-dJz"/>
-                            <constraint firstItem="DlJ-F5-ZKO" firstAttribute="leading" secondItem="gxF-sn-VSl" secondAttribute="leading" id="eZl-Mq-jUM"/>
-                            <constraint firstItem="dT8-nb-W0I" firstAttribute="centerX" secondItem="gxF-sn-VSl" secondAttribute="centerX" id="gd5-sm-52E"/>
-                            <constraint firstItem="DlJ-F5-ZKO" firstAttribute="trailing" secondItem="gxF-sn-VSl" secondAttribute="trailing" id="hGl-rz-LaY"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="gxF-sn-VSl"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Fs6-Dq-KPw"/>
-                    <connections>
-                        <outlet property="addPetButton" destination="dT8-nb-W0I" id="P50-Hf-VQp"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="O5z-DC-veM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="916" y="-770.46476761619192"/>
+            <point key="canvasLocation" x="822" y="-768"/>
         </scene>
         <!--Add Pet View Controller-->
         <scene sceneID="sKM-eD-GH5">
@@ -198,7 +130,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyI-yN-XGL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1786" y="-719"/>
+            <point key="canvasLocation" x="1713" y="-748"/>
         </scene>
         <!--Pet View Controller-->
         <scene sceneID="1I2-wY-yEc">
@@ -285,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dBz-nK-E8l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1764" y="-1496"/>
+            <point key="canvasLocation" x="1713" y="-1444"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="d4R-Kt-fXn">
