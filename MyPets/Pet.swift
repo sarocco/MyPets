@@ -7,20 +7,24 @@
 //
 
 import Foundation
+import UIKit
 
 class Pet {
-    var name: String
-    var petPicture: String
-    var sex: String?
-    var age: Int?
+    var name = ""
+    var petPicture = ""
+    var sex = ""
+    var age: Date?
     var vaccine: Vaccine?
+    
+    init(){}
 
-    init (name: String, petPicture: String) {
+    init (name: String, sex:String, petPicture: String) {
         self.name = name
+        self.sex = sex
         self.petPicture = petPicture
     }
     
-    init (name: String, petPicture: String, sex: String, age: Int, vaccine: Vaccine) {
+    init (name: String, petPicture: String, sex: String, age: Date, vaccine: Vaccine) {
         self.name = name
         self.petPicture = petPicture
         self.sex = sex

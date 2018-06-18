@@ -10,10 +10,18 @@ import UIKit
 
 class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    //Outlets
     @IBOutlet weak var petsTable: UITableView!
     @IBOutlet weak var addPetsButton: UIButton!
     
+    //Variables
     var pets:[Pet] = []
+    var pet:Pet!
+    
+    //Actions
+    @IBAction func goToAddPet(_ sender: Any) {
+        performSegue(withIdentifier: "segueToAddPet", sender: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +31,9 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if let pet = pet {
+            pets.append(pet)
+        }
         petsTable.reloadData()
     }
     
@@ -30,7 +41,7 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let cell = petsTable.dequeueReusableCell(withIdentifier: "petCell", for:indexPath) as? PetTableViewCell
         
-        // Access to each Match and displays the data of each match in one row of the table
+        // Access to each Pet and displays the data of each one
         let pet = pets[indexPath.row]
         cell?.petName.text = pet.name
         cell?.petPicture.image = UIImage(named: pet.petPicture)
@@ -61,14 +72,10 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.petsTable.deselectRow(at: index, animated: true)
         }
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "segueToAddPet" {
+            let vController = segue.destination as! AddPetViewController
+        }
     }
-    */
-
 }

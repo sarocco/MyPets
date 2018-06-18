@@ -24,10 +24,9 @@ class PetViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         if let pet = pet {
             petName.text = pet.name
             petImage.image = UIImage(named: pet.petPicture)
+        }
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        }
     }
 
     

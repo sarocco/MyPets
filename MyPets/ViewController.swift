@@ -12,6 +12,7 @@ import GoogleSignIn
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
 
+    //Outlets
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var image: UIImageView!
