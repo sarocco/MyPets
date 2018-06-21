@@ -11,20 +11,20 @@ import UIKit
 
 class Pet {
     var name = ""
-    var petPicture = ""
+    var petPicture = UIImage()
     var sex = ""
     var age: Date?
     var vaccine: Vaccine?
     
     init(){}
 
-    init (name: String, sex:String, petPicture: String) {
+    init (name: String, sex:String, petPicture: UIImage) {
         self.name = name
         self.sex = sex
         self.petPicture = petPicture
     }
     
-    init (name: String, petPicture: String, sex: String, age: Date, vaccine: Vaccine) {
+    init (name: String, petPicture: UIImage, sex: String, age: Date, vaccine: Vaccine) {
         self.name = name
         self.petPicture = petPicture
         self.sex = sex

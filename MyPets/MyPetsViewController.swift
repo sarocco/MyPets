@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MyPetsViewControllerDelegate {
 
     //Outlets
     @IBOutlet weak var petsTable: UITableView!
@@ -16,7 +16,6 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //Variables
     var pets:[Pet] = []
-    var pet:Pet!
     
     //Actions
     @IBAction func goToAddPet(_ sender: Any) {
@@ -25,15 +24,21 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         petsTable.delegate = self
         petsTable.dataSource = self
         
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let pet = pet {
-            pets.append(pet)
-        }
+//        if let pet = pet {
+//            pets.append(pet)
+//        }
+        petsTable.reloadData()
+    }
+    
+    func didSavePet(pet: Pet) {
+        pets.append(pet)
         petsTable.reloadData()
     }
     
@@ -44,7 +49,7 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Access to each Pet and displays the data of each one
         let pet = pets[indexPath.row]
         cell?.petName.text = pet.name
-        cell?.petPicture.image = UIImage(named: pet.petPicture)
+        cell?.petPicture.image = pet.petPicture
         return cell!
     }
     
@@ -76,6 +81,11 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToAddPet" {
             let vController = segue.destination as! AddPetViewController
+            vController.delegate = self
         }
     }
+}
+
+protocol MyPetsViewControllerDelegate {
+    func didSavePet(pet : Pet)
 }
