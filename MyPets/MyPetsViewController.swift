@@ -31,9 +31,6 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        if let pet = pet {
-//            pets.append(pet)
-//        }
         petsTable.reloadData()
     }
     
@@ -60,7 +57,7 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //Set the height of the row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 100
     }
     
     //Send the information of the pet you select to the next controller: MatchViewController

@@ -19,6 +19,7 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     
     //Variables
     var message:String = ""
+    var selectedImage: UIImage?
     var pet: Pet!
     var delegate: MyPetsViewControllerDelegate?
 
@@ -39,6 +40,12 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     override func viewDidLoad() {
+        if let pet = pet {
+            textPetName.text = pet.name
+            textSex.text = pet.sex
+            checkNac.date = pet.age!
+            imageView.imageView?.image = pet.petPicture
+        }
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
@@ -46,6 +53,7 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
         {
+            selectedImage = image
             imageView.setImage(image, for: UIControlState.normal)
         }
         self.dismiss(animated: true, completion: nil)
@@ -62,11 +70,14 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
                 if !validateBirth(birthDate: date){
                     message = "Please check your pet's birthday"
                 }else{
+                    if (self.selectedImage == nil){
+                        message = "Please load your pets photo"
+                    }else{
                     let alert = UIAlertController(title: "Mensaje", message: "Pet succesfully saved", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in
                         let pet = Pet()
-                        if let image = self.imageView.imageView {
-                            pet.petPicture = image.image!
+                        if let image = self.selectedImage {
+                            pet.petPicture = image
                         }
                         pet.name = name
                         pet.age = date
@@ -77,10 +88,10 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
                     }))
                     self.present(alert, animated: true, completion: nil)
                     return
+                    }
                 }
             }
         }
-        
         let alert = UIAlertController(title: "Mensaje", message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -100,13 +111,6 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
         pet.name = textPetName.text!
         pet.sex = textSex.text!
     }
-
-   /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueToAddPet" {
-            let vController = segue.destination as! MyPetsViewController
-            vController.pet = pet
-        }
-    }*/
 }
 
 
