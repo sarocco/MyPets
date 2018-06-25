@@ -2,8 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please allow access to your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please, allow access to GPS</string>
 	<key>Privacy - Photo library Usage Description</key>
-	<string>Allow access to my Photo Library</string>
+	<string>Allow access to your Photo Library</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

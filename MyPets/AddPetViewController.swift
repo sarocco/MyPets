@@ -44,6 +44,10 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
             textPetName.text = pet.name
             textSex.text = pet.sex
             checkNac.date = pet.age!
+            /* ------NOT WORKING ------- FIXME
+             let radius = (imageView.frame.width) / 2
+            imageView.layer.cornerRadius = radius
+            imageView.clipsToBounds = true*/
             imageView.imageView?.image = pet.petPicture
         }
         super.viewDidLoad()
@@ -59,7 +63,6 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
         self.dismiss(animated: true, completion: nil)
     }
     
-
     func doSave(name:String,sex:String ,date:Date){
         if(name == ""){
             message = "Name is not valid"
@@ -107,10 +110,6 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
         return isValid
     }
     
-    func loadData(){
-        pet.name = textPetName.text!
-        pet.sex = textSex.text!
-    }
 }
 
 

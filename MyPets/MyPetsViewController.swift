@@ -47,6 +47,10 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let pet = pets[indexPath.row]
         cell?.petName.text = pet.name
         cell?.petPicture.image = pet.petPicture
+        cell?.petPicture.clipsToBounds = true
+        let radius = (cell?.petPicture.frame.width)! / 2
+        cell?.petPicture.layer.cornerRadius = radius
+        cell?.petPicture.layer.masksToBounds = true
         return cell!
     }
     
