@@ -12,6 +12,7 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     
     //Outlets
     @IBOutlet weak var textPetName: UITextField!
+    @IBOutlet weak var textConactNumber: UITextField!
     @IBOutlet weak var textSex: UITextField!
     @IBOutlet weak var checkNac: UIDatePicker!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -34,16 +35,17 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     }
 
     @IBAction func bottonSave(_ sender: Any) {
-        if let name = textPetName?.text, let sex = textSex?.text, let date = checkNac?.date{
-            doSave (name:name, sex:sex ,date:date)
+        if let name = textPetName?.text,let conactNumber = textConactNumber.text, let sex = textSex?.text, let date = checkNac?.date{
+            doSave (name:name, contactNumber: conactNumber, sex:sex ,date:date)
         }
     }
     
     override func viewDidLoad() {
         if let pet = pet {
             textPetName.text = pet.name
+            textConactNumber.text = pet.contactNumber
             textSex.text = pet.sex
-            checkNac.date = pet.age!
+            checkNac.date = pet.dateOfBirth!
             /* ------NOT WORKING ------- FIXME
              let radius = (imageView.frame.width) / 2
             imageView.layer.cornerRadius = radius
@@ -63,34 +65,39 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
         self.dismiss(animated: true, completion: nil)
     }
     
-    func doSave(name:String,sex:String ,date:Date){
+    func doSave(name:String, contactNumber:String, sex:String ,date:Date){
         if(name == ""){
             message = "Name is not valid"
         }else{
-            if(sex == ""){
-                message = "Sex is not valid"
+            if(contactNumber == ""){
+                message = "Contact number not valid"
             }else{
-                if !validateBirth(birthDate: date){
-                    message = "Please check your pet's birthday"
+                if(sex == ""){
+                    message = "Sex is not valid"
                 }else{
-                    if (self.selectedImage == nil){
-                        message = "Please load your pets photo"
+                    if !validateBirth(birthDate: date){
+                        message = "Please check your pet's birthday"
                     }else{
-                    let alert = UIAlertController(title: "Mensaje", message: "Pet succesfully saved", preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in
-                        let pet = Pet()
-                        if let image = self.selectedImage {
-                            pet.petPicture = image
+                        if (self.selectedImage == nil){
+                            message = "Please load your pets photo"
+                        }else{
+                        let alert = UIAlertController(title: "Mensaje", message: "Pet succesfully saved", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in
+                            let pet = Pet()
+                            if let image = self.selectedImage {
+                                pet.petPicture = image
+                            }
+                            pet.name = name
+                            pet.contactNumber = contactNumber
+                            pet.dateOfBirth = date
+                            pet.sex = sex
+                            //pet.petPicture =
+                            self.delegate?.didSavePet(pet: pet)
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        return
                         }
-                        pet.name = name
-                        pet.age = date
-                        pet.sex = sex
-                        //pet.petPicture = 
-                        self.delegate?.didSavePet(pet: pet)
-                        self.navigationController?.popViewController(animated: true)
-                    }))
-                    self.present(alert, animated: true, completion: nil)
-                    return
                     }
                 }
             }

@@ -16,7 +16,6 @@
 		4165EB2620C32A2100841D57 /* MyPetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4165EB2520C32A2100841D57 /* MyPetsTests.swift */; };
 		4165EB3120C32A2100841D57 /* MyPetsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4165EB3020C32A2100841D57 /* MyPetsUITests.swift */; };
 		417A087B20CA0172008D53EA /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A087A20CA0172008D53EA /* Pet.swift */; };
-		417A087D20CA0353008D53EA /* Vaccine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A087C20CA0353008D53EA /* Vaccine.swift */; };
 		417A087F20CA071C008D53EA /* PetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A087E20CA071C008D53EA /* PetViewController.swift */; };
 		41B1954620E00A58005A5D49 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B1954520E00A58005A5D49 /* Location.swift */; };
 		41B1954820E015CD005A5D49 /* MyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B1954720E015CD005A5D49 /* MyAnnotation.swift */; };
@@ -64,7 +63,6 @@
 		4165EB3020C32A2100841D57 /* MyPetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetsUITests.swift; sourceTree = "<group>"; };
 		4165EB3220C32A2100841D57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		417A087A20CA0172008D53EA /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
-		417A087C20CA0353008D53EA /* Vaccine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vaccine.swift; sourceTree = "<group>"; };
 		417A087E20CA071C008D53EA /* PetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewController.swift; sourceTree = "<group>"; };
 		41B1954520E00A58005A5D49 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		41B1954720E015CD005A5D49 /* MyAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAnnotation.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 				4165EB1C20C32A2100841D57 /* Info.plist */,
 				417A087A20CA0172008D53EA /* Pet.swift */,
 				41B1954520E00A58005A5D49 /* Location.swift */,
-				417A087C20CA0353008D53EA /* Vaccine.swift */,
 				41DA190E20D335870000A25E /* MapViewController.swift */,
 				41B1954920E01DA7005A5D49 /* Utils.swift */,
 				41B1954720E015CD005A5D49 /* MyAnnotation.swift */,
@@ -509,7 +506,6 @@
 				41B1954620E00A58005A5D49 /* Location.swift in Sources */,
 				4165EB1320C32A2100841D57 /* ViewController.swift in Sources */,
 				41CD560120C9FE8D00434775 /* PetTableViewCell.swift in Sources */,
-				417A087D20CA0353008D53EA /* Vaccine.swift in Sources */,
 				41DA190F20D335870000A25E /* MapViewController.swift in Sources */,
 				41DA191120D347820000A25E /* MyPetsViewController.swift in Sources */,
 				4165EB1120C32A2100841D57 /* AppDelegate.swift in Sources */,

@@ -16,32 +16,34 @@ class Pet {
     var name = ""
     var petPicture = UIImage()
     var sex = ""
-    var age: Date?
-    var vaccine: Vaccine?
+    var dateOfBirth: Date?
     var contactNumber: String?
+    var lost = false
     
     init(){}
 
-    init (name: String, sex:String, petPicture: UIImage) {
+    init (name: String, sex:String, petPicture: UIImage, lost:Bool) {
         self.name = name
         self.sex = sex
         self.petPicture = petPicture
+        self.lost = lost
     }
     
-    init (name: String, sex:String, petPicture: UIImage, contactNumber:String, location:CLLocationCoordinate2D) {
+    init (name: String, sex:String, petPicture: UIImage, contactNumber:String, location:CLLocationCoordinate2D, lost:Bool) {
         self.name = name
         self.sex = sex
         self.petPicture = petPicture
         self.contactNumber = contactNumber
         self.location = location
+        self.lost = lost
     }
     
-    init (name: String, petPicture: UIImage, sex: String, age: Date, vaccine: Vaccine) {
+    init (name: String, petPicture: UIImage, sex: String, dateOfBirth: Date, lost: Bool) {
         self.name = name
         self.petPicture = petPicture
         self.sex = sex
-        self.age = age
-        self.vaccine = vaccine
+        self.dateOfBirth = dateOfBirth
+        self.lost = lost
     }
     
 }

@@ -14,13 +14,12 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     //Outlets
     @IBOutlet weak var petImage: UIImageView!
     @IBOutlet weak var petName: UILabel!
-    @IBOutlet weak var dateOfBirthLabel: UILabel!
-    @IBOutlet weak var sexLabel: UILabel!
-    @IBOutlet weak var noteLabel: UILabel!
-    @IBOutlet weak var birthday: UILabel!
+    @IBOutlet weak var contactNumberLabel: UILabel!
     @IBOutlet weak var sex: UILabel!
-    @IBOutlet weak var notes: UITextView!
-    @IBOutlet weak var editLabel: UIButton!
+    @IBOutlet weak var dateOfBirth: UILabel!
+    @IBOutlet weak var contactNumber: UILabel!
+    @IBOutlet weak var sexLabel: UILabel!
+    @IBOutlet weak var dateOfBirthLabel: UILabel!
     @IBOutlet weak var reportLostLabel: UIButton!
     
     //Variables
@@ -34,6 +33,7 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func reportLost(_ sender: Any) {
         determineMyCurrentLocation()
+        pet?.lost = true
         performSegue(withIdentifier: "reportLostId", sender: self)
     }
     
@@ -45,7 +45,8 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
             let radius = (petImage.frame.width) / 2
             petImage.layer.cornerRadius = radius
             petImage.clipsToBounds = true
-            birthday.text = pet.age?.description
+            dateOfBirth.text = pet.dateOfBirth?.description
+            contactNumber.text = pet.contactNumber
             sex.text = pet.sex
         }
         super.viewDidLoad()
