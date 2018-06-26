@@ -414,8 +414,8 @@
                         <outlet property="petImage" destination="BZd-fb-K52" id="plf-7o-vbe"/>
                         <outlet property="petName" destination="aOt-Ih-eEg" id="poI-DG-t53"/>
                         <outlet property="reportLostLabel" destination="NFr-iU-JDv" id="PoM-pW-Uya"/>
-                        <outlet property="sex" destination="7PH-cw-xWR" id="b08-d9-bo4"/>
-                        <outlet property="sexLabel" destination="pre-Pp-Rh6" id="2WS-hv-Xak"/>
+                        <outlet property="sex" destination="pre-Pp-Rh6" id="C7g-SE-alp"/>
+                        <outlet property="sexLabel" destination="7PH-cw-xWR" id="vsg-Gg-Iy2"/>
                         <segue destination="JDz-9l-HfM" kind="show" identifier="reportLostId" id="qYA-DZ-t4h"/>
                         <segue destination="TuY-We-Mzj" kind="show" identifier="editId" id="bv1-sb-nwF"/>
                     </connections>

@@ -15,10 +15,10 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var petImage: UIImageView!
     @IBOutlet weak var petName: UILabel!
     @IBOutlet weak var contactNumberLabel: UILabel!
-    @IBOutlet weak var sex: UILabel!
+    @IBOutlet weak var sexLabel: UILabel!
     @IBOutlet weak var dateOfBirth: UILabel!
     @IBOutlet weak var contactNumber: UILabel!
-    @IBOutlet weak var sexLabel: UILabel!
+    @IBOutlet weak var sex: UILabel!
     @IBOutlet weak var dateOfBirthLabel: UILabel!
     @IBOutlet weak var reportLostLabel: UIButton!
     
@@ -32,9 +32,13 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func reportLost(_ sender: Any) {
+        if (reportLostLabel.currentTitle == "Report Lost"){
         determineMyCurrentLocation()
         pet?.lost = true
         performSegue(withIdentifier: "reportLostId", sender: self)
+        } else {
+            pet?.lost = false
+        }
     }
     
     override func viewDidLoad() {
@@ -48,6 +52,10 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
             dateOfBirth.text = pet.dateOfBirth?.description
             contactNumber.text = pet.contactNumber
             sex.text = pet.sex
+            if (pet.lost == false){
+                reportLostLabel.setTitle("Report Lost", for: UIControlState.normal)
+            } else {
+                reportLostLabel.setTitle("Report Found", for: UIControlState.normal)            }
         }
         super.viewDidLoad()
     }
