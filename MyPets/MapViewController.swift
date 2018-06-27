@@ -33,7 +33,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    /*func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is MyAnnotation) {
             return nil
         }
@@ -51,7 +51,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         return anView
     }
     
-   /* //Send the information of the atm to the next view conroller when the button of the annotation is pressed
+   //Send the information of the atm to the next view conroller when the button of the annotation is pressed
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView{
             let an = view.annotation as! MyAnnotation

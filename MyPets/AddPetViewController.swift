@@ -46,11 +46,10 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
             textConactNumber.text = pet.contactNumber
             textSex.text = pet.sex
             checkNac.date = pet.dateOfBirth!
-            /* ------NOT WORKING ------- FIXME
              let radius = (imageView.frame.width) / 2
             imageView.layer.cornerRadius = radius
-            imageView.clipsToBounds = true*/
-            imageView.imageView?.image = pet.petPicture
+            imageView.clipsToBounds = true
+            imageView.setImage(pet.petPicture, for:[])
         }
         super.viewDidLoad()
         // Do any additional setup after loading the view.
