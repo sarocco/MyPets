@@ -14,28 +14,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var mapView: MKMapView!
     
     var lostPets:[Pet]?
+    var button: UIButton!
+
     
     override func viewDidLoad() {
         if let lostPets = lostPets {
             for pet in lostPets {
-                let ReportAnnotation = MKPointAnnotation()
-                ReportAnnotation.title = pet.name
-                ReportAnnotation.subtitle = pet.contactNumber
-                ReportAnnotation.coordinate = pet.location!
-                //mapView(mapView, viewForAnnotation: ReportAnnotation)
-                mapView.addAnnotation(ReportAnnotation)
-                //let annotation = MyAnnotation(pet: pet)
-                //self.mapView.addAnnotation(annotation)
+                let annotation = MyAnnotation(pet: pet)
+                //let annotation = MKPointAnnotation()
+                //annotation.title = pet.name
+                //annotation.subtitle = pet.contactNumber
+                //annotation.coordinate = pet.location!
+                mapView.addAnnotation(annotation)
             }
         }
         mapView.delegate = self
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     
-    //Shows the atm information on the map when the pin is selected
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is MyAnnotation) {
             return nil
@@ -47,15 +44,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             anView!.canShowCallout = true
             
             //set a button on at the right of the annotation
-            let button = UIButton(type: UIButtonType.detailDisclosure) as UIButton
+            button = UIButton(type: UIButtonType.detailDisclosure) as UIButton
             anView?.rightCalloutAccessoryView = button
             anView!.annotation = annotation
-            //anView!.image = pet.petPicture
         }
         return anView
     }
     
-    //Send the information of the atm to the next view conroller when the button of the annotation is pressed
+   /* //Send the information of the atm to the next view conroller when the button of the annotation is pressed
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView{
             let an = view.annotation as! MyAnnotation
@@ -63,7 +59,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             self.navigationController?.pushViewController(vController!, animated: true)
             vController?.pet = an.pet
         }
-    }
+    }*/
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

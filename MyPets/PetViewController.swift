@@ -49,7 +49,7 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
             let radius = (petImage.frame.width) / 2
             petImage.layer.cornerRadius = radius
             petImage.clipsToBounds = true
-            dateOfBirth.text = pet.dateOfBirth?.description
+            dateOfBirth.text = formatDate(date: pet.dateOfBirth!)
             contactNumber.text = pet.contactNumber
             sex.text = pet.sex
             if (pet.lost == false){
@@ -108,6 +108,12 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
             var lostPets = Utils.addLostPet(pet:pet!)
             vController.lostPets = lostPets
         }
+    }
+    
+    func formatDate(date: Date) -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        return dateFormatterPrint.string(from: date)
     }
     
 }
