@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
+import GoogleSignIn
 
-class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MyPetsViewControllerDelegate {
+class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MyPetsViewControllerDelegate, GIDSignInUIDelegate {
 
     //Outlets
     @IBOutlet weak var petsTable: UITableView!
@@ -16,10 +19,14 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //Variables
     var pets:[Pet] = []
+    var refPets: DatabaseReference!
     
     //Actions
     @IBAction func goToAddPet(_ sender: Any) {
         performSegue(withIdentifier: "segueToAddPet", sender: self)
+    }
+    @IBAction func logOut(_ sender: Any) {
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -27,8 +34,9 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         petsTable.delegate = self
         petsTable.dataSource = self
-        
+        refPets = Database.database().reference().child("Pets")
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         petsTable.reloadData()
@@ -40,7 +48,6 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = petsTable.dequeueReusableCell(withIdentifier: "petCell", for:indexPath) as? PetTableViewCell
         
         // Access to each Pet and displays the data of each one

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import FirebaseStorage
 
 class PetViewController: UIViewController, CLLocationManagerDelegate {
 
@@ -25,6 +26,9 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     //Variables
     var pet: Pet?
     var locationManager = CLLocationManager()
+    var imageReference: StorageReference {
+        return Storage.storage().reference().child("images")
+    }
     
     //Actions
     @IBAction func editPet(_ sender: Any) {
@@ -46,6 +50,7 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
         if let pet = pet {
             petName.text = pet.name
             petImage.image = pet.petPicture
+            //downloadImage() //Download image from firebase
             let radius = (petImage.frame.width) / 2
             petImage.layer.cornerRadius = radius
             petImage.clipsToBounds = true
@@ -114,6 +119,23 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = "MMM dd,yyyy"
         return dateFormatterPrint.string(from: date)
+    }
+    
+    //Download image from Firebase Storage
+    //----NOT WORKING----
+    func downloadImage(){
+        let downloadImageRef = imageReference.child((pet?.petPicture.description)!)
+        let downloadTask = downloadImageRef.getData(maxSize: 1024*1024*12) { (data, error) in
+            if let data = data {
+                let image = UIImage(data: data)
+                self.petImage.image = image
+            }
+            print(error ?? "NO ERROR")
+        }
+        downloadTask.observe(.progress){(snapshot) in
+            print(snapshot.progress ?? "NO MORE PROGRESS")
+        }
+        downloadTask.resume()
     }
     
 }

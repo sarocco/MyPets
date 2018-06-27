@@ -13,6 +13,7 @@ import CoreLocation
 class Pet {
     
     var location: CLLocationCoordinate2D?
+    var id: String?
     var name = ""
     var petPicture = UIImage()
     var sex = ""
@@ -22,7 +23,8 @@ class Pet {
     
     init(){}
 
-    init (name: String, sex:String, petPicture: UIImage, lost:Bool) {
+    init (id: String?, name: String, sex:String, petPicture: UIImage, lost:Bool) {
+        self.id = id
         self.name = name
         self.sex = sex
         self.petPicture = petPicture

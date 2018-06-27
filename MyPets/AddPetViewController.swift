@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseStorage
 
 class AddPetViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -23,6 +25,15 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     var selectedImage: UIImage?
     var pet: Pet!
     var delegate: MyPetsViewControllerDelegate?
+    
+    //Database Reference
+    //var ref: DatabaseReference!
+    var refPets: DatabaseReference!
+    
+    //create an instance or Storage and reference
+    var imageReference: StorageReference {
+        return Storage.storage().reference().child("images")
+    }
 
     //Actions
     @IBAction func importImage(_ sender: Any) {
@@ -35,6 +46,7 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     }
 
     @IBAction func bottonSave(_ sender: Any) {
+        //addPet()
         if let name = textPetName?.text,let conactNumber = textConactNumber.text, let sex = textSex?.text, let date = checkNac?.date{
             doSave (name:name, contactNumber: conactNumber, sex:sex ,date:date)
         }
@@ -49,10 +61,15 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
              let radius = (imageView.frame.width) / 2
             imageView.layer.cornerRadius = radius
             imageView.clipsToBounds = true
+            
+            //downloadImage() //Download image from firebase storage
             imageView.setImage(pet.petPicture, for:[])
+            
+            //ref = Database.database().reference()
+            refPets = Database.database().reference().child("Pet")
+            //ref.child("Pets").child("Pet").child("Name").setValue("Holaaa")
         }
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -85,12 +102,12 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
                             let pet = Pet()
                             if let image = self.selectedImage {
                                 pet.petPicture = image
+                                self.uploadImage(image: image) // Firebase Storage
                             }
                             pet.name = name
                             pet.contactNumber = contactNumber
                             pet.dateOfBirth = date
                             pet.sex = sex
-                            //pet.petPicture =
                             self.delegate?.didSavePet(pet: pet)
                             self.navigationController?.popViewController(animated: true)
                         }))
@@ -116,6 +133,49 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
         return isValid
     }
     
+    // Add pet in firebase databade
+    //----NOT WORKING-----
+    func addPet(){
+        let key = refPets.childByAutoId().key
+        let pet = [ "id": key,
+                "Name": textPetName.text! as String,
+                   "DateOfBirth" : checkNac.date.description,
+                   "Sex": textSex.text! as String,
+                   "ContactNumber": textConactNumber.text! as String
+        ]
+        refPets.child(key).setValue(pet)
+    }
+    
+    //Save image in Firebase Storage
+    //----NOT WORKING-----
+    func uploadImage(image: UIImage){
+        guard let imageData = UIImageJPEGRepresentation(image, 1) else {return}
+        let imageSRef = self.imageReference.child(image.description)
+        let upload = imageSRef.putData(imageData, metadata: nil) { (metadata, error) in
+            print(metadata ?? "NO METADATA")
+            print(error ?? "NO ERROR")
+        }
+        upload.observe(.progress) { (snapshot) in
+            print(snapshot.progress ?? "NO MORE PROGRESS")
+        }
+        upload.resume()
+    }
+    
+    //Download image from Firebase Storage
+    func downloadImage(){
+        let downloadImageRef = imageReference.child(pet.petPicture.description)
+        let downloadTask = downloadImageRef.getData(maxSize: 1024*1024*12) { (data, error) in
+            if let data = data {
+                let image = UIImage(data: data)
+                self.imageView.setImage(image, for: .normal)
+            }
+            print(error ?? "NO ERROR")
+        }
+        downloadTask.observe(.progress){(snapshot) in
+            print(snapshot.progress ?? "NO MORE PROGRESS")
+        }
+        downloadTask.resume()
+    }
 }
 
 
