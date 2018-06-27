@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0FDB34D8C27151F32AB4D95B /* Pods_MyPets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F567E70C67C1BFB850BC626C /* Pods_MyPets.framework */; };
+		41472B0420E4408500A474C9 /* LostPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41472B0320E4408500A474C9 /* LostPetViewController.swift */; };
 		4165EB1120C32A2100841D57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4165EB1020C32A2100841D57 /* AppDelegate.swift */; };
 		4165EB1320C32A2100841D57 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4165EB1220C32A2100841D57 /* ViewController.swift */; };
 		4165EB1620C32A2100841D57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4165EB1420C32A2100841D57 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 /* Begin PBXFileReference section */
 		12E3951D3F6BABDBBB485F21 /* Pods-MyPets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPets.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyPets/Pods-MyPets.release.xcconfig"; sourceTree = "<group>"; };
 		29DDF0E0D0A836D1647B7328 /* Pods-MyPetsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPetsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyPetsTests/Pods-MyPetsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		41472B0320E4408500A474C9 /* LostPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostPetViewController.swift; sourceTree = "<group>"; };
 		4165EB0D20C32A2100841D57 /* MyPets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4165EB1020C32A2100841D57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4165EB1220C32A2100841D57 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				4165EB1020C32A2100841D57 /* AppDelegate.swift */,
 				4165EB1220C32A2100841D57 /* ViewController.swift */,
 				4165EB1420C32A2100841D57 /* Main.storyboard */,
+				41472B0320E4408500A474C9 /* LostPetViewController.swift */,
 				41DA191220D34B2A0000A25E /* AddPetViewController.swift */,
 				41DA191020D347820000A25E /* MyPetsViewController.swift */,
 				417A087E20CA071C008D53EA /* PetViewController.swift */,
@@ -500,6 +503,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41472B0420E4408500A474C9 /* LostPetViewController.swift in Sources */,
 				417A087B20CA0172008D53EA /* Pet.swift in Sources */,
 				41B1954820E015CD005A5D49 /* MyAnnotation.swift in Sources */,
 				41DA191320D34B2A0000A25E /* AddPetViewController.swift in Sources */,

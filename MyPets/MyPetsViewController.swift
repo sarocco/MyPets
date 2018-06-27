@@ -26,6 +26,7 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         performSegue(withIdentifier: "segueToAddPet", sender: self)
     }
     @IBAction func logOut(_ sender: Any) {
+        GIDSignIn.sharedInstance().signOut()
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     

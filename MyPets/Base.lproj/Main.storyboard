@@ -34,11 +34,27 @@
                     <navigationItem key="navigationItem" id="4r4-Sg-R5t"/>
                     <connections>
                         <outlet property="mapView" destination="OkL-va-gCL" id="4WI-Lv-VcX"/>
+                        <segue destination="aGV-vM-ngm" kind="show" id="osd-4R-hKS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="erX-Tq-yW4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1916" y="2"/>
+        </scene>
+        <!--Lost Pet View Controller-->
+        <scene sceneID="T9r-jl-PPs">
+            <objects>
+                <viewController storyboardIdentifier="reportLostId" id="aGV-vM-ngm" customClass="LostPetViewController" customModule="MyPets" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CJO-Oe-NxI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="pjY-Hx-lFQ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gi4-PD-Glb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2731" y="-2"/>
         </scene>
         <!--My Pets View Controller-->
         <scene sceneID="VrG-WQ-Nsl">
@@ -556,6 +572,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bv1-sb-nwF"/>
-        <segue reference="qYA-DZ-t4h"/>
+        <segue reference="ndf-k4-2WS"/>
     </inferredMetricsTieBreakers>
 </document>

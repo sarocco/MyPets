@@ -15,7 +15,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     var lostPets:[Pet]?
     var button: UIButton!
-
     
     override func viewDidLoad() {
         if let lostPets = lostPets {
@@ -33,11 +32,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
-    /*func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is MyAnnotation) {
             return nil
         }
-        let reuseId = "id"
+        let anView = MKAnnotationView(annotation: annotation, reuseIdentifier: "reuseId")
+        anView.image = UIImage(named:"bone")
+        anView.canShowCallout = true
+        button = UIButton(type: UIButtonType.detailDisclosure) as UIButton
+        anView.rightCalloutAccessoryView = button
+        anView.annotation = annotation
+        
+        /*let reuseId = "id"
         var anView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
         if anView == nil {
             anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
@@ -47,7 +53,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             button = UIButton(type: UIButtonType.detailDisclosure) as UIButton
             anView?.rightCalloutAccessoryView = button
             anView!.annotation = annotation
-        }
+        }*/
         return anView
     }
     
@@ -55,11 +61,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView{
             let an = view.annotation as! MyAnnotation
-            let vController = storyboard?.instantiateViewController(withIdentifier: "reportLostId") as? PetViewController
+            let vController = storyboard?.instantiateViewController(withIdentifier: "reportLostId") as? LostPetViewController
             self.navigationController?.pushViewController(vController!, animated: true)
             vController?.pet = an.pet
         }
-    }*/
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
