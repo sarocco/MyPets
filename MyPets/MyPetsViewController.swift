@@ -43,9 +43,16 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        refPets = Database.database().reference().child("Pets")
-        refPets.observeSingleEvent(of: .value) { (snapshot) in
+        
+        let dbref = Database.database().reference()
+        dbref.child("Pets").queryOrdered(byChild: "Owner").queryEqual(toValue: Auth.auth().currentUser?.email).observeSingleEvent(of: .value) { (snapshot) in
             if let values = snapshot.value as? [String: Any] {
+                
+                
+        /*refPets = Database.database().reference().child("Pets")
+        refPets.observeSingleEvent(of: .value) { (snapshot) in
+            if let values = snapshot.value as? [String: Any] {*/
+                
                 self.pets = []
                 for (_ , value) in values {
                     if let newValue = Mapper<Pet>().map(JSONObject:value){
@@ -55,7 +62,9 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.petsTable.reloadData()
             }
         }
-    }
+            }
+            
+    
     
     func didSavePet(pet: Pet) {
         pets.append(pet)

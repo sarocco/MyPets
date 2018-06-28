@@ -36,12 +36,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
             if let lostPets = self.lostPets {
                 for pet in lostPets {
-                    if let location = pet.location {
                         let annotation = MyAnnotation(pet: pet)
                         self.mapView.addAnnotation(annotation)
                     }
                 }
-            }
             self.mapView.reloadInputViews()
         }
     }
