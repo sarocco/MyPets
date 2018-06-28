@@ -1,11 +1,12 @@
 //
-//  AddPetViewController.swift
+//  EditViewController.swift
 //  MyPets
 //
-//  Created by Carolina Rocco on 14/6/18.
+//  Created by Carolina Rocco on 28/6/18.
 //  Copyright © 2018 Silvia Rocco. All rights reserved.
 //
 
+import UIKit
 import UIKit
 import FirebaseDatabase
 import FirebaseStorage
@@ -13,27 +14,27 @@ import FirebaseStorageUI
 import Firebase
 import FirebaseAuth
 
-class AddPetViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class EditViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     //Outlets
     @IBOutlet weak var textPetName: UITextField!
     @IBOutlet weak var textConactNumber: UITextField!
     @IBOutlet weak var textSex: UITextField!
     @IBOutlet weak var checkNac: UIDatePicker!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     @IBOutlet weak var imageView: UIButton!
     
     //Variables
     var message:String = ""
     var selectedImage: UIImage?
     var pet: Pet!
-    var delegate: MyPetsViewControllerDelegate?
-
+    var petId: String!
+    var delegate: PetViewControllerDelegate?
     //create an instance or Storage and reference
     var imageReference: StorageReference {
         return Storage.storage().reference()
     }
-
+    
     //Actions
     @IBAction func importImage(_ sender: Any) {
         let image = UIImagePickerController()
@@ -43,36 +44,32 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
         image.allowsEditing = false
         self.present(image, animated: true)
     }
-
+    
     @IBAction func bottonSave(_ sender: Any) {
         if let name = textPetName?.text,let conactNumber = textConactNumber.text, let sex = textSex?.text, let date = checkNac?.date {
-            doSave (name:name, contactNumber: conactNumber, sex:sex ,date:date)
+            updateData (name:name, contactNumber: conactNumber, sex:sex ,date:date)
         }
     }
-    
+
     override func viewDidLoad() {
-        
-        let radius = (imageView.frame.width) / 2
-        imageView.layer.cornerRadius = radius
-        imageView.clipsToBounds = true
-        
         if let pet = pet {
+            petId = pet.id
+            print("HEREEEEE", pet.id)
             textPetName.text = pet.name
             textConactNumber.text = pet.contactNumber
             textSex.text = pet.sex
             checkNac.date = Utils.formatMyString(str: pet.dateOfBirth!)
-            downloadImage(image: pet.petPicture)
-            viewWillAppear(true)
-        }
+            let radius = (imageView.frame.width) / 2
+            imageView.layer.cornerRadius = radius
+            imageView.clipsToBounds = true
+            downloadImage() //---FIXME---
+            //let image = UIImage (named: pet.petPicture)
+            //imageView.setImage(image,for: UIControlState.normal)
         super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if let pet = pet {
-            editData(pet: pet)
+
+        // Do any additional setup after loading the view.
         }
     }
-
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
         {
@@ -82,7 +79,7 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
         self.dismiss(animated: true, completion: nil)
     }
     
-    func doSave(name:String, contactNumber:String, sex:String ,date:Date){
+    func updateData(name:String, contactNumber:String, sex:String ,date:Date){
         if(name == ""){
             message = "Name is not valid"
         }else{
@@ -98,70 +95,26 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
                         if (self.selectedImage == nil){
                             message = "Please load your pets photo"
                         }else{
-                        let alert = UIAlertController(title: "Mensaje", message: "Pet succesfully saved", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in
-                            let pet = Pet()
-                            if let image = self.selectedImage {
-                                pet.petPicture = "\(UUID().uuidString).jpg"
-                                self.uploadImage(image: image, name: pet.petPicture) // Firebase Storage
-                            }
-                            pet.name = name
-                            pet.contactNumber = contactNumber
-                            pet.dateOfBirth = Utils.formatMyDate(date: date)
-                            pet.sex = sex
-                            pet.owner = (Auth.auth().currentUser?.email)!
-                            self.delegate?.didSavePet(pet: pet)
-                            let dbref = Database.database().reference()
-                            let key = dbref.child("Pets").childByAutoId().key
-                            pet.id = key
-                            dbref.child("Pets").child(key).setValue(pet.toJSON())
-                            self.navigationController?.popViewController(animated: true)
-                        }))
-                        self.present(alert, animated: true, completion: nil)
-                        return
-                        }
-                    }
-                }
-            }
-        }
-        let alert = UIAlertController(title: "Mensaje", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func editData(pet:Pet){
-        if(textPetName.text == ""){
-            message = "Name is not valid"
-        }else{
-            if(textConactNumber.text == ""){
-                message = "Contact number not valid"
-            }else{
-                if(textSex.text == ""){
-                    message = "Sex is not valid"
-                }else{
-                    if !validateBirth(birthDate: checkNac.date){
-                        message = "Please check your pet's birthday"
-                    }else{
-                        if (self.selectedImage == nil){
-                            message = "Please load your pets photo"
-                        }else{
                             let alert = UIAlertController(title: "Mensaje", message: "Pet succesfully saved", preferredStyle: UIAlertControllerStyle.alert)
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in
-                                let pet = pet
+                                let pet = Pet()
                                 if let image = self.selectedImage {
                                     pet.petPicture = "\(UUID().uuidString).jpg"
                                     self.uploadImage(image: image, name: pet.petPicture) // Firebase Storage
                                 }
-                                pet.name = self.textPetName.text!
-                                pet.contactNumber = self.textConactNumber.text!
-                                pet.dateOfBirth = Utils.formatMyDate(date: self.checkNac.date)
-                                pet.sex = self.textSex.text!
-                                //self.delegate?.didUpdatePet(pet: pet)
+                                pet.name = name
+                                pet.contactNumber = contactNumber
+                                pet.dateOfBirth = Utils.formatMyDate(date: date)
+                                pet.sex = sex
+                                self.delegate?.didUpdatePet(pet: pet)
                                 let dbref = Database.database().reference()
-                                dbref.child("Pets").child(pet.id).setValue(pet.toJSON())
-                                let vController = self.storyboard?.instantiateViewController(withIdentifier: "IdentifierMyPets") as? MyPetsViewController
-                                self.navigationController?.pushViewController(vController!, animated: true)
-                                //self.navigationController?.popViewController(animated: true)
+                                print("HEREEEEE", pet.id)
+                                dbref.child("Pets").child(self.petId).child("Name").setValue(pet.name)
+                                dbref.child("Pets").child(self.petId).child("ContactNumber").setValue(pet.contactNumber)
+                                dbref.child("Pets").child(pet.id).child("dateOfBirth").setValue(pet.dateOfBirth)
+                                dbref.child("Pets").child(pet.id).child("Sex").setValue(pet.sex)
+                                dbref.child("Pets").child(pet.id).child("PetPicture").setValue(pet.petPicture)
+                                self.navigationController?.popViewController(animated: true)
                             }))
                             self.present(alert, animated: true, completion: nil)
                             return
@@ -200,10 +153,8 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     //Download image from Firebase Storage
-    func downloadImage(image: String){
-        let downloadImageRef = imageReference.child(image)
+    func downloadImage(){
+        let downloadImageRef = imageReference.child("images").child(pet.petPicture)
         self.imageView.imageView?.sd_setImage(with: downloadImageRef, placeholderImage: #imageLiteral(resourceName: "loadPhoto"))
     }
 }
-
-

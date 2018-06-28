@@ -13,41 +13,42 @@ import FirebaseStorageUI
 import FirebaseDatabase
 import ObjectMapper
 
-class PetViewController: UIViewController, CLLocationManagerDelegate {
+class PetViewController: UIViewController, CLLocationManagerDelegate, PetViewControllerDelegate {    
 
     //Outlets
     @IBOutlet weak var petImage: UIImageView!
     @IBOutlet weak var petName: UILabel!
-    @IBOutlet weak var contactNumberLabel: UILabel!
-    @IBOutlet weak var sexLabel: UILabel!
     @IBOutlet weak var dateOfBirth: UILabel!
     @IBOutlet weak var contactNumber: UILabel!
     @IBOutlet weak var sex: UILabel!
-    @IBOutlet weak var dateOfBirthLabel: UILabel!
     @IBOutlet weak var reportLostLabel: UIButton!
     
     //Variables
     var pet: Pet?
     var locationManager = CLLocationManager()
     var imageReference: StorageReference {
-        return Storage.storage().reference().child("images")
+        return Storage.storage().reference()
     }
     
     //Actions
     @IBAction func editPet(_ sender: Any) {
-        performSegue(withIdentifier: "editId", sender: self)
+        performSegue(withIdentifier: "segueToEdit", sender: self)
+        //performSegue(withIdentifier: "segueToEditPet", sender: self) // ----NOT WORKING----
+
     }
     
     @IBAction func reportLost(_ sender: Any) {
         if (reportLostLabel.currentTitle == "Report Lost"){
             determineMyCurrentLocation()
             let dbref = Database.database().reference()
-            dbref.child("Pets").child((pet?.id!)!).child("Location").setValue(pet?.location?.toJSON())
-            dbref.child("Pets").child((pet?.id!)!).child("Lost").setValue(true)
+            dbref.child("Pets").child((pet?.id)!).child("Location").setValue(pet?.location?.toJSON())
+            dbref.child("Pets").child((pet?.id)!).child("Lost").setValue(true)
+            pet?.lastSeen = Utils.getTodayDate()
+            dbref.child("Pets").child((pet?.id)!).child("LastSeen").setValue(pet?.lastSeen)
             performSegue(withIdentifier: "reportLostId", sender: self)
         } else {
             let dbref = Database.database().reference()
-            dbref.child("Pets").child((pet?.id!)!).child("Lost").setValue(false)
+            dbref.child("Pets").child((pet?.id)!).child("Lost").setValue(false)
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -60,7 +61,7 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
             let radius = (petImage.frame.width) / 2
             petImage.layer.cornerRadius = radius
             petImage.clipsToBounds = true
-            dateOfBirth.text = pet.dateOfBirth!
+            dateOfBirth.text = Utils.getPetAge(dateOfBirth: pet.dateOfBirth!)
             contactNumber.text = pet.contactNumber
             sex.text = pet.sex
             if (pet.lost == false){
@@ -69,6 +70,10 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
                 reportLostLabel.setTitle("Report Found", for: UIControlState.normal)}
         }
         super.viewDidLoad()
+    }
+    
+    func didUpdatePet(pet: Pet) {
+        super.reloadInputViews()
     }
     
 
@@ -99,14 +104,17 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
         print("user latitude = \(userLocation.coordinate.latitude)")
         print("user longitude = \(userLocation.coordinate.longitude)")
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
     {
         print("Error \(error)")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "editId" {
+        if segue.identifier == "segueToEdit" {
+        // ----NOT WORKING----
+        //if segue.identifier == "segueToEditPet" {
+            //let vController = segue.destination as! EditViewController
             let vController = segue.destination as! AddPetViewController
             vController.pet = pet
         }
@@ -120,8 +128,12 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     
     //Download image from Firebase Storage
     func downloadImage(){
-        let downloadImageRef = imageReference.child("images").child((pet?.petPicture)!)
-        self.petImage.sd_setImage(with: downloadImageRef, placeholderImage: #imageLiteral(resourceName: "loadPhoto"))
+        let downloadImageRef = imageReference.child((pet?.petPicture)!)
+        self.petImage.sd_setImage(with: downloadImageRef, placeholderImage: #imageLiteral(resourceName: "dog"))
     }
     
+}
+//---Not working---
+protocol PetViewControllerDelegate {
+    func didUpdatePet(pet : Pet)
 }

@@ -4,10 +4,14 @@
 <dict>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
+	<key></key>
+	<string></string>
+	<key>NSContactsUsageDescription</key>
+	<string>Let me access to your contacts</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please allow access to your location</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Please allow access to your location</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please allow access to your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Please, allow access to GPS</string>
 	<key>Privacy - Photo library Usage Description</key>
@@ -62,6 +66,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    
 </dict>
 </plist>

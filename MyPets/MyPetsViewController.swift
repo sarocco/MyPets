@@ -23,7 +23,7 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var pets:[Pet] = []
     var refPets: DatabaseReference!
     var imageReference: StorageReference {
-        return Storage.storage().reference().child("images")
+        return Storage.storage().reference()
     }
     
     //Actions
@@ -68,12 +68,8 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Access to each Pet and displays the data of each one
         let pet = pets[indexPath.row]
         cell?.petName.text = pet.name
-        
-        let downloadImageRef = imageReference.child("images").child((pet.petPicture))
+        let downloadImageRef = imageReference.child(pet.petPicture)
         cell?.petPicture.sd_setImage(with: downloadImageRef, placeholderImage: #imageLiteral(resourceName: "dog"))
-        print(pet.petPicture)
-        
-        //cell?.petPicture.image = UIImage (named: pet.petPicture)
         cell?.petPicture.clipsToBounds = true
         let radius = (cell?.petPicture.frame.width)! / 2
         cell?.petPicture.layer.cornerRadius = radius

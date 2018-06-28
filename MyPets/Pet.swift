@@ -17,7 +17,7 @@ class Pet: Mappable{
     }
     
     var location: Location?
-    var id: String?
+    var id = ""
     var name = ""
     var petPicture = ""
     var sex = ""
@@ -25,10 +25,11 @@ class Pet: Mappable{
     var contactNumber: String?
     var lost = false
     var owner = ""
+    var lastSeen = ""
     
     init(){}
 
-    init (id: String?, name: String, sex:String, petPicture: String, lost:Bool, owner: String) {
+    init (id: String, name: String, sex:String, petPicture: String, lost:Bool, owner: String) {
         self.id = id
         self.name = name
         self.sex = sex
@@ -37,13 +38,14 @@ class Pet: Mappable{
         self.owner = owner
     }
     
-    init (name: String, sex:String, petPicture: String, contactNumber:String, location:Location, lost:Bool) {
+    init (name: String, sex:String, petPicture: String, contactNumber:String, location:Location, lost:Bool, lastSeen: String) {
         self.name = name
         self.sex = sex
         self.petPicture = petPicture
         self.contactNumber = contactNumber
         self.location = location
         self.lost = lost
+        self.lastSeen = lastSeen
     }
     
     init (name: String, petPicture: String, sex: String, dateOfBirth: String, lost: Bool) {
@@ -55,7 +57,7 @@ class Pet: Mappable{
     }
     
     func mapping(map: Map) {
-        id <- map["id"]
+        id <- map["Id"]
         location <- map["Location"]
         name <- map["Name"]
         sex <- map["Sex"]
@@ -64,6 +66,7 @@ class Pet: Mappable{
         contactNumber <- map["ContactNumber"]
         petPicture <- map["PetPicture"]
         owner <- map ["Owner"]
+        lastSeen <- map ["LastSeen"]
     }
     
 }
