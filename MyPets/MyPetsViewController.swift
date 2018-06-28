@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 import GoogleSignIn
+import FirebaseStorageUI
+import ObjectMapper
 
 class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MyPetsViewControllerDelegate, GIDSignInUIDelegate {
 
@@ -20,6 +22,9 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //Variables
     var pets:[Pet] = []
     var refPets: DatabaseReference!
+    var imageReference: StorageReference {
+        return Storage.storage().reference().child("images")
+    }
     
     //Actions
     @IBAction func goToAddPet(_ sender: Any) {
@@ -32,15 +37,24 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         petsTable.delegate = self
         petsTable.dataSource = self
-        refPets = Database.database().reference().child("Pets")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        petsTable.reloadData()
+        refPets = Database.database().reference().child("Pets")
+        refPets.observeSingleEvent(of: .value) { (snapshot) in
+            if let values = snapshot.value as? [String: Any] {
+                self.pets = []
+                for (_ , value) in values {
+                    if let newValue = Mapper<Pet>().map(JSONObject:value){
+                        self.pets.append(newValue)
+                    }
+                }
+                self.petsTable.reloadData()
+            }
+        }
     }
     
     func didSavePet(pet: Pet) {
@@ -54,7 +68,12 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Access to each Pet and displays the data of each one
         let pet = pets[indexPath.row]
         cell?.petName.text = pet.name
-        cell?.petPicture.image = pet.petPicture
+        
+        let downloadImageRef = imageReference.child("images").child((pet.petPicture))
+        cell?.petPicture.sd_setImage(with: downloadImageRef, placeholderImage: #imageLiteral(resourceName: "dog"))
+        print(pet.petPicture)
+        
+        //cell?.petPicture.image = UIImage (named: pet.petPicture)
         cell?.petPicture.clipsToBounds = true
         let radius = (cell?.petPicture.frame.width)! / 2
         cell?.petPicture.layer.cornerRadius = radius

@@ -9,6 +9,9 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseStorage
+import FirebaseStorageUI
+import Firebase
+import FirebaseAuth
 
 class AddPetViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -25,11 +28,7 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     var selectedImage: UIImage?
     var pet: Pet!
     var delegate: MyPetsViewControllerDelegate?
-    
-    //Database Reference
-    //var ref: DatabaseReference!
-    var refPets: DatabaseReference!
-    
+
     //create an instance or Storage and reference
     var imageReference: StorageReference {
         return Storage.storage().reference().child("images")
@@ -47,7 +46,7 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
 
     @IBAction func bottonSave(_ sender: Any) {
         //addPet()
-        if let name = textPetName?.text,let conactNumber = textConactNumber.text, let sex = textSex?.text, let date = checkNac?.date{
+        if let name = textPetName?.text,let conactNumber = textConactNumber.text, let sex = textSex?.text, let date = checkNac?.date {
             doSave (name:name, contactNumber: conactNumber, sex:sex ,date:date)
         }
     }
@@ -57,17 +56,12 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
             textPetName.text = pet.name
             textConactNumber.text = pet.contactNumber
             textSex.text = pet.sex
-            checkNac.date = pet.dateOfBirth!
+            checkNac.date = Utils.formatMyString(str: pet.dateOfBirth!)
              let radius = (imageView.frame.width) / 2
             imageView.layer.cornerRadius = radius
             imageView.clipsToBounds = true
-            
-            //downloadImage() //Download image from firebase storage
-            imageView.setImage(pet.petPicture, for:[])
-            
-            //ref = Database.database().reference()
-            refPets = Database.database().reference().child("Pet")
-            //ref.child("Pets").child("Pet").child("Name").setValue("Holaaa")
+            downloadImage() //Download image from firebase storage
+            //imageView.setImage(pet.petPicture, for:[])
         }
         super.viewDidLoad()
     }
@@ -101,14 +95,19 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in
                             let pet = Pet()
                             if let image = self.selectedImage {
-                                pet.petPicture = image
-                                self.uploadImage(image: image) // Firebase Storage
+                                pet.petPicture = "\(UUID().uuidString).jpg"
+                                self.uploadImage(image: image, name: pet.petPicture) // Firebase Storage
                             }
                             pet.name = name
                             pet.contactNumber = contactNumber
-                            pet.dateOfBirth = date
+                            pet.dateOfBirth = Utils.formatMyDate(date: date)
                             pet.sex = sex
+                            pet.owner = (Auth.auth().currentUser?.email)!
                             self.delegate?.didSavePet(pet: pet)
+                            let dbref = Database.database().reference()
+                            let key = dbref.child("Pets").childByAutoId().key
+                            pet.id = key
+                            dbref.child("Pets").child(key).setValue(pet.toJSON())
                             self.navigationController?.popViewController(animated: true)
                         }))
                         self.present(alert, animated: true, completion: nil)
@@ -133,24 +132,10 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
         return isValid
     }
     
-    // Add pet in firebase databade
-    //----NOT WORKING-----
-    func addPet(){
-        let key = refPets.childByAutoId().key
-        let pet = [ "id": key,
-                "Name": textPetName.text! as String,
-                   "DateOfBirth" : checkNac.date.description,
-                   "Sex": textSex.text! as String,
-                   "ContactNumber": textConactNumber.text! as String
-        ]
-        refPets.child(key).setValue(pet)
-    }
-    
     //Save image in Firebase Storage
-    //----NOT WORKING-----
-    func uploadImage(image: UIImage){
+    func uploadImage(image: UIImage, name: String){
         guard let imageData = UIImageJPEGRepresentation(image, 1) else {return}
-        let imageSRef = self.imageReference.child(image.description)
+        let imageSRef = self.imageReference.child(name)
         let upload = imageSRef.putData(imageData, metadata: nil) { (metadata, error) in
             print(metadata ?? "NO METADATA")
             print(error ?? "NO ERROR")
@@ -163,18 +148,8 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     
     //Download image from Firebase Storage
     func downloadImage(){
-        let downloadImageRef = imageReference.child(pet.petPicture.description)
-        let downloadTask = downloadImageRef.getData(maxSize: 1024*1024*12) { (data, error) in
-            if let data = data {
-                let image = UIImage(data: data)
-                self.imageView.setImage(image, for: .normal)
-            }
-            print(error ?? "NO ERROR")
-        }
-        downloadTask.observe(.progress){(snapshot) in
-            print(snapshot.progress ?? "NO MORE PROGRESS")
-        }
-        downloadTask.resume()
+        let downloadImageRef = imageReference.child("images").child(pet.petPicture)
+        self.imageView.imageView?.sd_setImage(with: downloadImageRef, placeholderImage: #imageLiteral(resourceName: "loadPhoto"))
     }
 }
 

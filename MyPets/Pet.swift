@@ -9,29 +9,35 @@
 import Foundation
 import UIKit
 import CoreLocation
+import ObjectMapper
 
-class Pet {
+class Pet: Mappable{
     
-    var location: CLLocationCoordinate2D?
+    required init?(map: Map) {
+    }
+    
+    var location: Location?
     var id: String?
     var name = ""
-    var petPicture = UIImage()
+    var petPicture = ""
     var sex = ""
-    var dateOfBirth: Date?
+    var dateOfBirth: String?
     var contactNumber: String?
     var lost = false
+    var owner = ""
     
     init(){}
 
-    init (id: String?, name: String, sex:String, petPicture: UIImage, lost:Bool) {
+    init (id: String?, name: String, sex:String, petPicture: String, lost:Bool, owner: String) {
         self.id = id
         self.name = name
         self.sex = sex
         self.petPicture = petPicture
         self.lost = lost
+        self.owner = owner
     }
     
-    init (name: String, sex:String, petPicture: UIImage, contactNumber:String, location:CLLocationCoordinate2D, lost:Bool) {
+    init (name: String, sex:String, petPicture: String, contactNumber:String, location:Location, lost:Bool) {
         self.name = name
         self.sex = sex
         self.petPicture = petPicture
@@ -40,12 +46,24 @@ class Pet {
         self.lost = lost
     }
     
-    init (name: String, petPicture: UIImage, sex: String, dateOfBirth: Date, lost: Bool) {
+    init (name: String, petPicture: String, sex: String, dateOfBirth: String, lost: Bool) {
         self.name = name
         self.petPicture = petPicture
         self.sex = sex
         self.dateOfBirth = dateOfBirth
         self.lost = lost
+    }
+    
+    func mapping(map: Map) {
+        id <- map["id"]
+        location <- map["Location"]
+        name <- map["Name"]
+        sex <- map["Sex"]
+        dateOfBirth <- map["DateOfBirth"]
+        lost <- map["Lost"]
+        contactNumber <- map["ContactNumber"]
+        petPicture <- map["PetPicture"]
+        owner <- map ["Owner"]
     }
     
 }

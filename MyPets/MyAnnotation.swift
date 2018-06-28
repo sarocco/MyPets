@@ -14,9 +14,8 @@ class MyAnnotation: NSObject, MKAnnotation {
     var pet: Pet
     
     var coordinate: CLLocationCoordinate2D {
-    
         get {
-            return CLLocationCoordinate2D(latitude: (pet.location?.latitude)!, longitude: (pet.location?.longitude)!)
+            return CLLocationCoordinate2D(latitude: (pet.location?.latitude)!, longitude: (pet.location?.longitud)!)
         }
     }
     

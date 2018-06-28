@@ -8,6 +8,8 @@
 
 import UIKit
 import MapKit
+import FirebaseDatabase
+import ObjectMapper
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -17,18 +19,31 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var button: UIButton!
     
     override func viewDidLoad() {
-        if let lostPets = lostPets {
-            for pet in lostPets {
-                let annotation = MyAnnotation(pet: pet)
-                //let annotation = MKPointAnnotation()
-                //annotation.title = pet.name
-                //annotation.subtitle = pet.contactNumber
-                //annotation.coordinate = pet.location!
-                mapView.addAnnotation(annotation)
-            }
-        }
         mapView.delegate = self
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let dbref = Database.database().reference()
+        dbref.child("Pets").queryOrdered(byChild: "Lost").queryEqual(toValue: true).observeSingleEvent(of: .value) { (snapshot) in
+            if let values = snapshot.value as? [String: Any] {
+                self.lostPets = []
+                for (_ , value) in values {
+                    if let newValue = Mapper<Pet>().map(JSONObject:value){
+                        self.lostPets?.append(newValue)
+                    }
+                }
+            }
+            if let lostPets = self.lostPets {
+                for pet in lostPets {
+                    if let location = pet.location {
+                        let annotation = MyAnnotation(pet: pet)
+                        self.mapView.addAnnotation(annotation)
+                    }
+                }
+            }
+            self.mapView.reloadInputViews()
+        }
     }
     
     
@@ -42,18 +57,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         button = UIButton(type: UIButtonType.detailDisclosure) as UIButton
         anView.rightCalloutAccessoryView = button
         anView.annotation = annotation
-        
-        /*let reuseId = "id"
-        var anView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
-        if anView == nil {
-            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            anView!.canShowCallout = true
-            
-            //set a button on at the right of the annotation
-            button = UIButton(type: UIButtonType.detailDisclosure) as UIButton
-            anView?.rightCalloutAccessoryView = button
-            anView!.annotation = annotation
-        }*/
         return anView
     }
     
@@ -71,16 +74,5 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

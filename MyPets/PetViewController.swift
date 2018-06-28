@@ -9,6 +9,9 @@
 import UIKit
 import CoreLocation
 import FirebaseStorage
+import FirebaseStorageUI
+import FirebaseDatabase
+import ObjectMapper
 
 class PetViewController: UIViewController, CLLocationManagerDelegate {
 
@@ -37,11 +40,15 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func reportLost(_ sender: Any) {
         if (reportLostLabel.currentTitle == "Report Lost"){
-        determineMyCurrentLocation()
-        pet?.lost = true
-        performSegue(withIdentifier: "reportLostId", sender: self)
+            determineMyCurrentLocation()
+            let dbref = Database.database().reference()
+            dbref.child("Pets").child((pet?.id!)!).child("Location").setValue(pet?.location?.toJSON())
+            dbref.child("Pets").child((pet?.id!)!).child("Lost").setValue(true)
+            performSegue(withIdentifier: "reportLostId", sender: self)
         } else {
-            pet?.lost = false
+            let dbref = Database.database().reference()
+            dbref.child("Pets").child((pet?.id!)!).child("Lost").setValue(false)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -49,18 +56,17 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     
         if let pet = pet {
             petName.text = pet.name
-            petImage.image = pet.petPicture
-            //downloadImage() //Download image from firebase
+            downloadImage()
             let radius = (petImage.frame.width) / 2
             petImage.layer.cornerRadius = radius
             petImage.clipsToBounds = true
-            dateOfBirth.text = formatDate(date: pet.dateOfBirth!)
+            dateOfBirth.text = pet.dateOfBirth!
             contactNumber.text = pet.contactNumber
             sex.text = pet.sex
             if (pet.lost == false){
                 reportLostLabel.setTitle("Report Lost", for: UIControlState.normal)
             } else {
-                reportLostLabel.setTitle("Report Found", for: UIControlState.normal)            }
+                reportLostLabel.setTitle("Report Found", for: UIControlState.normal)}
         }
         super.viewDidLoad()
     }
@@ -80,20 +86,16 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestLocation()
             //startUpdatingLocation()
-            //pet?.location = locationManager.location?.coordinate
-            pet?.location = CLLocationCoordinate2D(latitude: -34.886254, longitude: -56.149628)
+            let lat = locationManager.location?.coordinate.latitude
+            let lon = locationManager.location?.coordinate.longitude
+            pet?.location = Location(lat: lat!, lon: lon!)
             //locationManager.startUpdatingHeading()
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
-        
-        // Call stopUpdatingLocation() to stop listening for location updates,
-        // other wise this function will be called every time when user location changes.
-        
         // manager.stopUpdatingLocation()
-        
         print("user latitude = \(userLocation.coordinate.latitude)")
         print("user longitude = \(userLocation.coordinate.longitude)")
     }
@@ -108,11 +110,6 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
             let vController = segue.destination as! AddPetViewController
             vController.pet = pet
         }
-        if segue.identifier == "reportLostId" {
-            let vController = segue.destination as! MapViewController
-            var lostPets = Utils.addLostPet(pet:pet!)
-            vController.lostPets = lostPets
-        }
     }
     
     func formatDate(date: Date) -> String {
@@ -122,20 +119,9 @@ class PetViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     //Download image from Firebase Storage
-    //----NOT WORKING----
     func downloadImage(){
-        let downloadImageRef = imageReference.child((pet?.petPicture.description)!)
-        let downloadTask = downloadImageRef.getData(maxSize: 1024*1024*12) { (data, error) in
-            if let data = data {
-                let image = UIImage(data: data)
-                self.petImage.image = image
-            }
-            print(error ?? "NO ERROR")
-        }
-        downloadTask.observe(.progress){(snapshot) in
-            print(snapshot.progress ?? "NO MORE PROGRESS")
-        }
-        downloadTask.resume()
+        let downloadImageRef = imageReference.child("images").child((pet?.petPicture)!)
+        self.petImage.sd_setImage(with: downloadImageRef, placeholderImage: #imageLiteral(resourceName: "loadPhoto"))
     }
     
 }

@@ -14,6 +14,9 @@ target 'MyPets' do
   pod 'Firebase/Crash', '~> 4.0.0'
   pod 'Firebase/Messaging', '~> 4.0.0'
   pod 'GoogleSignIn', '~> 4.1.2'
+  pod 'Alamofire'
+  pod 'AlamofireObjectMapper'
+  pod 'FirebaseUI/Storage'
 
   target 'MyPetsTests' do
     inherit! :search_paths
