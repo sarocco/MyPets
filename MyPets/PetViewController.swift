@@ -13,7 +13,7 @@ import FirebaseStorageUI
 import FirebaseDatabase
 import ObjectMapper
 
-class PetViewController: UIViewController, CLLocationManagerDelegate, PetViewControllerDelegate {    
+class PetViewController: UIViewController, CLLocationManagerDelegate {
 
     //Outlets
     @IBOutlet weak var petImage: UIImageView!
@@ -33,7 +33,6 @@ class PetViewController: UIViewController, CLLocationManagerDelegate, PetViewCon
     //Actions
     @IBAction func editPet(_ sender: Any) {
         performSegue(withIdentifier: "segueToEdit", sender: self)
-        //performSegue(withIdentifier: "segueToEditPet", sender: self) // ----NOT WORKING----
 
     }
     
@@ -112,9 +111,6 @@ class PetViewController: UIViewController, CLLocationManagerDelegate, PetViewCon
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToEdit" {
-        // ----NOT WORKING----
-        //if segue.identifier == "segueToEditPet" {
-            //let vController = segue.destination as! EditViewController
             let vController = segue.destination as! AddPetViewController
             vController.pet = pet
         }
@@ -133,7 +129,4 @@ class PetViewController: UIViewController, CLLocationManagerDelegate, PetViewCon
     }
     
 }
-//---Not working---
-protocol PetViewControllerDelegate {
-    func didUpdatePet(pet : Pet)
-}
+

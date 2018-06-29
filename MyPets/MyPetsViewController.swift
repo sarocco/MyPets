@@ -18,6 +18,7 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //Outlets
     @IBOutlet weak var petsTable: UITableView!
     @IBOutlet weak var addPetsButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     //Variables
     var pets:[Pet] = []
@@ -36,6 +37,8 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewDidLoad() {
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
         super.viewDidLoad()
         petsTable.delegate = self
         petsTable.dataSource = self
@@ -48,11 +51,6 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         dbref.child("Pets").queryOrdered(byChild: "Owner").queryEqual(toValue: Auth.auth().currentUser?.email).observeSingleEvent(of: .value) { (snapshot) in
             if let values = snapshot.value as? [String: Any] {
                 
-                
-        /*refPets = Database.database().reference().child("Pets")
-        refPets.observeSingleEvent(of: .value) { (snapshot) in
-            if let values = snapshot.value as? [String: Any] {*/
-                
                 self.pets = []
                 for (_ , value) in values {
                     if let newValue = Mapper<Pet>().map(JSONObject:value){
@@ -62,8 +60,9 @@ class MyPetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.petsTable.reloadData()
             }
         }
-            }
-            
+        activityIndicator.stopAnimating()
+    }
+    
     
     
     func didSavePet(pet: Pet) {

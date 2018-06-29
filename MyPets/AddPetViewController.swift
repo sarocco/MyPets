@@ -13,7 +13,7 @@ import FirebaseStorageUI
 import Firebase
 import FirebaseAuth
 
-class AddPetViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class AddPetViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
     
     //Outlets
     @IBOutlet weak var textPetName: UITextField!
@@ -45,17 +45,18 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     }
 
     @IBAction func bottonSave(_ sender: Any) {
+        if pet == nil{
         if let name = textPetName?.text,let conactNumber = textConactNumber.text, let sex = textSex?.text, let date = checkNac?.date {
             doSave (name:name, contactNumber: conactNumber, sex:sex ,date:date)
-        }
+            }
+        } else {editData(pet: pet)}
     }
     
     override func viewDidLoad() {
-        
+
         let radius = (imageView.frame.width) / 2
         imageView.layer.cornerRadius = radius
         imageView.clipsToBounds = true
-        
         if let pet = pet {
             textPetName.text = pet.name
             textConactNumber.text = pet.contactNumber
@@ -64,14 +65,16 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
             downloadImage(image: pet.petPicture)
             viewWillAppear(true)
         }
+        self.hideKeyboard()
+
         super.viewDidLoad()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    /*override func viewDidAppear(_ animated: Bool) {
         if let pet = pet {
             editData(pet: pet)
         }
-    }
+    }*/
 
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
@@ -160,6 +163,8 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
                                 let dbref = Database.database().reference()
                                 dbref.child("Pets").child(pet.id).setValue(pet.toJSON())
                                 let vController = self.storyboard?.instantiateViewController(withIdentifier: "IdentifierMyPets") as? MyPetsViewController
+                                //self.navigationController?.viewControllers.popLast()
+                            
                                 self.navigationController?.pushViewController(vController!, animated: true)
                                 //self.navigationController?.popViewController(animated: true)
                             }))
@@ -203,6 +208,24 @@ class AddPetViewController: UIViewController, UINavigationControllerDelegate, UI
     func downloadImage(image: String){
         let downloadImageRef = imageReference.child(image)
         self.imageView.imageView?.sd_setImage(with: downloadImageRef, placeholderImage: #imageLiteral(resourceName: "loadPhoto"))
+    }
+    
+}
+
+extension UIViewController
+{
+    func hideKeyboard()
+    {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(UIViewController.dismissKeyboard))
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard()
+    {
+        view.endEditing(true)
     }
 }
 

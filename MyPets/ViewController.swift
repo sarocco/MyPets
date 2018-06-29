@@ -16,13 +16,12 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator.startAnimating()
         GIDSignIn.sharedInstance().uiDelegate = self
-        activityIndicator.stopAnimating()
+        self.view.backgroundColor = UIColor(patternImage:UIImage (named:"bkgr")!)
     }
 
     override func didReceiveMemoryWarning() {
